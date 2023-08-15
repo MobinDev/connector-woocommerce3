@@ -64,7 +64,7 @@ trait CustomerTrait
         ) {
             $pullGroups = Config::get(Config::OPTIONS_PULL_CUSTOMER_GROUPS, []);
         }
-
+        $pullGroups = apply_filters('jtlwoo_customer_pull_groups', $pullGroups);
         return \sprintf("
             SELECT %s
             FROM `%s` um
