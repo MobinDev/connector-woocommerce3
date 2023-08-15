@@ -194,9 +194,6 @@ class Connector extends BaseConnector
      */
     private function handleCallByPlugin(RequestPacket $requestPacket): Action
     {
-        $action = new Action();
-        $action->setHandled(true);
-
         if ($this->getMethod()->getAction() === 'pull') {
             $event = new HandlePullEvent($this->getMethod()->getController(), $requestPacket->getParams());
             $this->eventDispatcher->dispatch(HandlePullEvent::EVENT_NAME, $event);
@@ -211,9 +208,8 @@ class Connector extends BaseConnector
             $this->eventDispatcher->dispatch(HandleDeleteEvent::EVENT_NAME, $event);
         }
 
-        $action->setResult($event->getResult());
 
-        return $action;
+        return $event->getResult();
     }
 
     /**
